@@ -1,0 +1,23 @@
+
+qna = {
+    "hi": "hey",
+    "how are you": "I am fine",
+    "are you a robot": "Yes, I am a robot, but a good one. Let me prove it to you. How can I help you?",
+    "how is the weather today":"its cloudy today",
+}
+
+while True:
+    qs = input("You: ").lower().strip()
+    
+    if qs == "quit":
+        print("Thankyou for your time!")
+        break
+    else:
+        if qs in qna:
+            answer = qna[qs]
+            if callable(answer):
+                print(answer)
+            else:
+                print(answer)
+        else:
+            print("Sorry, I don't understand that question.")
