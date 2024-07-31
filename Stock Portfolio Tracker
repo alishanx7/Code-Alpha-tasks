@@ -1,0 +1,62 @@
+class StockPortfolio:
+    def __init__(self):
+        self.portfolio = {}
+        self.stock_prices = {}
+
+    def add_stock(self, ticker, shares, purchase_price):
+        if ticker in self.portfolio:
+            self.portfolio[ticker]['shares'] += shares
+            self.portfolio[ticker]['purchase_price'] = purchase_price
+        else:
+            self.portfolio[ticker] = {'shares': shares, 'purchase_price': purchase_price}
+        print(f"Added {shares} shares of {ticker} at ${purchase_price} per share.")
+
+    def set_stock_price(self, ticker, current_price):
+        self.stock_prices[ticker] = current_price
+
+    def get_stock_price(self, ticker):
+        return self.stock_prices.get(ticker, "Price not set")
+
+    def calculate_portfolio_value(self):
+        total_value = 0
+        for ticker, info in self.portfolio.items():
+            current_price = self.get_stock_price(ticker)
+            if isinstance(current_price, str):  
+                print(f"Price for {ticker} is not set.")
+                continue
+            total_value += current_price * info['shares']
+        return total_value
+
+    def calculate_performance(self):
+        total_cost = 0
+        total_value = self.calculate_portfolio_value()
+        for ticker, info in self.portfolio.items():
+            total_cost += info['shares'] * info['purchase_price']
+        profit_loss = total_value - total_cost
+        return total_value, profit_loss
+
+    def display_portfolio(self):
+        print("\nPortfolio Summary:")
+        for ticker, info in self.portfolio.items():
+            current_price = self.get_stock_price(ticker)
+            if isinstance(current_price, str):  
+                print(f"{ticker}: {info['shares']} shares, Purchase Price: ${info['purchase_price']}, Current Price: Not available")
+            else:
+                value = current_price * info['shares']
+                print(f"{ticker}: {info['shares']} shares, Purchase Price: ${info['purchase_price']}, Current Price: ${current_price}, Current Value: ${value}")
+
+        total_value, profit_loss = self.calculate_performance()
+        print(f"\nTotal Portfolio Value: ${total_value:.2f}")
+        print(f"Profit/Loss: ${profit_loss:.2f}\n")
+
+
+if __name__ == "__main__":
+    tracker = StockPortfolio()
+    tracker.add_stock('AAPL', 25, 195)  
+    tracker.add_stock('GOOGL', 12, 1700) 
+
+    
+    tracker.set_stock_price('AAPL', 220)   
+    tracker.set_stock_price('GOOGL', 2100) 
+
+    tracker.display_portfolio()
