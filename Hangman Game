@@ -1,1 +1,92 @@
+import random
+
+def hangman():
+    list_of_words = ['hangman', 'black', 'india', 'car']
+    word = random.choice(list_of_words)
+    turns = 10
+    guessed_letters = set()
+    correct_entries = set('abcdefghijklmnopqrstuvwxyz')
+    
+    while turns > 0:
+        main_word = ""    
+
+        for letter in word:
+            if letter in guessed_letters:
+                main_word += letter
+            else:
+                main_word += "_ "
+
+        if "_ " not in main_word:
+            print(main_word)
+            print("You won!!!")
+            break
+
+        print("Guess the word:", main_word)
+        guess = input("Enter a letter: ").lower()
+
+        if guess in correct_entries:
+            if guess in guessed_letters:
+                print("You already guessed that letter.")
+            else:
+                guessed_letters.add(guess)
+                if guess not in word:
+                    turns -= 1
+                    print(f"Wrong guess! {turns} turns left.")
+                    print("--------------")
+                    # Display hangman stages
+                    if turns == 9:
+                        print("9 turns left!!!!")
+                    elif turns == 8:
+                        print("8 turns left!!!!")
+                        print("         O         ")
+                    elif turns == 7:
+                        print("7 turns left!!!!")
+                        print("         O         ")
+                        print("         |         ")
+                    elif turns == 6:
+                        print("6 turns left!!!!")
+                        print("         O         ")
+                        print("         |         ")
+                        print("        /          ")
+                    elif turns == 5:
+                        print("5 turns left!!!!")
+                        print("         O         ")
+                        print("         |         ")
+                        print("        / \\        ")
+                    elif turns == 4:
+                        print("4 turns left!!!!")
+                        print("       \\ O         ")
+                        print("         |         ")
+                        print("        / \\        ")
+                    elif turns == 3:
+                        print("3 turns left!!!!")
+                        print("       \\ O /       ")
+                        print("         |         ")
+                        print("        / \\        ")
+                    elif turns == 2:
+                        print("2 turns left!!!!")
+                        print("       \\ O / |     ")
+                        print("         |         ")
+                        print("        / \\        ")
+                    elif turns == 1:
+                        print("Only 1 turn left!!!! Hangman on his last breath")
+                        print("       \\ O /_|     ")
+                        print("         |         ")
+                        print("        / \\        ")
+                    elif turns == 0:
+                        print("You lose!")
+                        print("You let a good man die")
+                        print("         O_|     ")
+                        print("        /|\\        ")
+                        print("        / \\        ")
+                        break
+        else:
+            print("Enter a valid letter.")
+
+# Start of the game
+name = input("ENTER YOUR NAME --> ")
+print(f"Welcome, {name}!")
+print("---------------------------")
+print("Try to guess the word in less than 10 attempts.")
+hangman()
 
